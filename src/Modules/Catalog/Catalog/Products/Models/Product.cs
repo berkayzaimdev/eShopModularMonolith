@@ -1,4 +1,6 @@
-﻿namespace Catalog.Products.Models;
+﻿using Catalog.Products.Events;
+
+namespace Catalog.Products.Models;
 
 public class Product : Aggregate<Guid>
 {
@@ -10,7 +12,7 @@ public class Product : Aggregate<Guid>
 
     public static Product Create(Guid id, string name, List<string> category, string description, string imageFile, decimal price)
     {
-		CheckProperties(name, price);
+		CheckIfValid(name, price);
 
 		Product product = new()
         {
@@ -22,23 +24,36 @@ public class Product : Aggregate<Guid>
             Price = price
         };
 
+        product.AddDomainEvent(new ProductCreatedEvent(product));
+
         return product;
     }
 
 	public void Update(string name, List<string> category, string description, string imageFile, decimal price)
     {
-        CheckProperties(name, price);
+        CheckIfValid(name, price);
 
         Name = name;
         Category = category;
         Description = description;
         ImageFile = imageFile;
         Price = price;
+
+        CheckPrice(price);
 	}
 
-    private static void CheckProperties(string name, decimal price)
+    private static void CheckIfValid(string name, decimal price)
     {
 		ArgumentException.ThrowIfNullOrEmpty(name);
 		ArgumentOutOfRangeException.ThrowIfNegativeOrZero(price);
+	}
+
+	private void CheckPrice(decimal price)
+	{
+		if(Price != price)
+        {
+            Price = price;
+            AddDomainEvent(new ProductPriceChangedEvent(this));
+        }
 	}
 }
