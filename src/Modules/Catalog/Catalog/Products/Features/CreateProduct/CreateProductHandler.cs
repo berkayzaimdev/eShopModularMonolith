@@ -1,6 +1,4 @@
-﻿using FluentValidation;
-
-namespace Catalog.Products.Features.CreateProduct;
+﻿namespace Catalog.Products.Features.CreateProduct;
 
 public record CreateProductCommand(ProductDto Product)
 	: ICommand<CreateProductResult>;
@@ -26,13 +24,6 @@ internal class CreateProductHandler
 {
 	public async Task<CreateProductResult> Handle(CreateProductCommand request, CancellationToken cancellationToken)
 	{
-		var result = await validator.ValidateAsync(request, cancellationToken);
-		var errors = result.Errors.Select(x => x.ErrorMessage).ToList();
-		if (errors.Any())
-		{
-			throw new ValidationException(errors.FirstOrDefault());
-		}
-
 		var product = CreateNewProduct(request.Product);
 		dbContext.Products.Add(product);
 		await dbContext.SaveChangesAsync(cancellationToken);
