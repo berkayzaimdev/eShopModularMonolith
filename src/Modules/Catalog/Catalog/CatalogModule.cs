@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.EntityFrameworkCore.Diagnostics;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Shared.Behaviors;
 using Shared.Data.Interceptors;
 
 namespace Catalog;
@@ -15,6 +16,7 @@ public static class CatalogModule
 		services.AddMediatR(config =>
 		{
 			config.RegisterServicesFromAssembly(assembly);
+			config.AddOpenBehavior(typeof(ValidationBehavior<,>));
 		});
 
 		services.AddValidatorsFromAssembly(assembly);
