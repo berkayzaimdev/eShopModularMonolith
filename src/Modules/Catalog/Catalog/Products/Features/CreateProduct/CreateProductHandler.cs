@@ -3,7 +3,7 @@
 public record CreateProductCommand(ProductDto Product)
 	: ICommand<CreateProductResult>;
 public record CreateProductResult(Guid Id);
-public class CreateProductHandler 
+internal class CreateProductHandler 
 	(CatalogDbContext dbContext)
 	: ICommandHandler<CreateProductCommand, CreateProductResult>
 {
