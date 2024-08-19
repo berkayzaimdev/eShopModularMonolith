@@ -15,6 +15,7 @@ public static class CatalogModule
 		{
 			config.RegisterServicesFromAssembly(assembly);
 			config.AddOpenBehavior(typeof(ValidationBehavior<,>));
+			config.AddOpenBehavior(typeof(LoggingBehavior<,>));
 		});
 
 		services.AddValidatorsFromAssembly(assembly);
