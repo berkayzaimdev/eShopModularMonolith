@@ -1,11 +1,6 @@
-using Basket;
-using Carter;
-using Catalog;
-using Ordering;
-using Shared.Exceptions.Handler;
-using Shared.Extensions;
-
 var builder = WebApplication.CreateBuilder(args);
+
+builder.Host.UseSerilog((context, config) => config.ReadFrom.Configuration(context.Configuration));
 
 builder.Services.AddControllers();
 
@@ -30,12 +25,14 @@ builder.Services.AddSingleton<IConfiguration>(builder.Configuration);
 
 var app = builder.Build();
 
+app.MapCarter();
+app.UseSerilogRequestLogging();
+app.UseExceptionHandler(opts => { });
+
 app
 	.UseCatalogModule()
 	.UseBasketModule()
 	.UseOrderingModule();
-
-app.UseExceptionHandler(opts => { });
 
 app.UseStaticFiles();
 
