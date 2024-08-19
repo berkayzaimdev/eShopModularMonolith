@@ -1,5 +1,4 @@
-﻿using Catalog.Contracts.Products.Features.GetProductById;
-using MediatR;
+﻿using MediatR;
 
 namespace Basket.Basket.Features.AddItemIntoBasket;
 
