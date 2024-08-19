@@ -12,7 +12,9 @@ builder.Services.AddControllers();
 //	config.WithModules(catalogModules);
 //});
 
-builder.Services.AddCarterWithAssemblies(typeof(CatalogModule).Assembly);
+builder.Services.AddCarterWithAssemblies(
+	typeof(CatalogModule).Assembly,
+	typeof(BasketModule).Assembly);
 
 builder.Services
 	.AddCatalogModule(builder.Configuration)
