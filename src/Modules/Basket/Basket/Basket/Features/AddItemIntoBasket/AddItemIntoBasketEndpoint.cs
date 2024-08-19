@@ -26,4 +26,4 @@ public class AddItemIntoBasketEndpoint : ICarterModule
 		.WithDescription("Add Item Into Basket")
 		.RequireAuthorization();
 	}
-}}
+}
