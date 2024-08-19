@@ -2,6 +2,7 @@ using Basket;
 using Carter;
 using Catalog;
 using Ordering;
+using Shared.Exceptions.Handler;
 using Shared.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -23,6 +24,8 @@ builder.Services
 	.AddBasketModule(builder.Configuration)
 	.AddOrderingModule(builder.Configuration);
 
+builder.Services.AddExceptionHandler<GlobalExceptionHandler>();
+
 builder.Services.AddSingleton<IConfiguration>(builder.Configuration);
 
 var app = builder.Build();
@@ -31,6 +34,8 @@ app
 	.UseCatalogModule()
 	.UseBasketModule()
 	.UseOrderingModule();
+
+app.UseExceptionHandler(opts => { });
 
 app.UseStaticFiles();
 
