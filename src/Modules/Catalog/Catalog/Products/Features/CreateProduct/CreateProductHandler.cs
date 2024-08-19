@@ -20,11 +20,19 @@ public class CreateProductValidator : AbstractValidator<CreateProductCommand>
 
 
 internal class CreateProductHandler 
-	(CatalogDbContext dbContext)
+	(CatalogDbContext dbContext,
+	 IValidator<CreateProductCommand> validator)
 	: ICommandHandler<CreateProductCommand, CreateProductResult>
 {
 	public async Task<CreateProductResult> Handle(CreateProductCommand request, CancellationToken cancellationToken)
 	{
+		var result = await validator.ValidateAsync(request, cancellationToken);
+		var errors = result.Errors.Select(x => x.ErrorMessage).ToList();
+		if (errors.Any())
+		{
+			throw new ValidationException(errors.FirstOrDefault());
+		}
+
 		var product = CreateNewProduct(request.Product);
 		dbContext.Products.Add(product);
 		await dbContext.SaveChangesAsync(cancellationToken);
