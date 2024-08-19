@@ -12,7 +12,7 @@ public static class Extensions
 		where TContext : DbContext
 	{
 		MigrateDatabaseAsync<TContext>(app.ApplicationServices).GetAwaiter().GetResult();
-		SeedDataAsync(app.ApplicationServices);
+		SeedDataAsync(app.ApplicationServices).GetAwaiter().GetResult();
 
 
 		return app;
