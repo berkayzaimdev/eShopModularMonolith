@@ -8,3 +8,5 @@ global using Catalog.Products.Events;
 global using Catalog.Data.Seed;
 global using Shared.Data;
 global using Shared.Data.Seed;
+using Catalog.Products.Dtos;
+using Shared.CQRS;
