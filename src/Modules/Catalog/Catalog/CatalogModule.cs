@@ -11,12 +11,6 @@ public static class CatalogModule
 	public static IServiceCollection AddCatalogModule(this IServiceCollection services, IConfiguration configuration)
 	{
 		Assembly assembly = Assembly.GetExecutingAssembly();
-		services.AddMediatR(config =>
-		{
-			config.RegisterServicesFromAssembly(assembly);
-			config.AddOpenBehavior(typeof(ValidationBehavior<,>));
-			config.AddOpenBehavior(typeof(LoggingBehavior<,>));
-		});
 
 		services.AddValidatorsFromAssembly(assembly);
 

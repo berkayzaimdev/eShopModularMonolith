@@ -12,9 +12,20 @@ builder.Services.AddControllers();
 //	config.WithModules(catalogModules);
 //});
 
-builder.Services.AddCarterWithAssemblies(
-	typeof(CatalogModule).Assembly,
-	typeof(BasketModule).Assembly);
+// common services; carter, mediatr, fluent validation
+var catalogAssembly = typeof(CatalogModule).Assembly;
+var basketAssembly = typeof(BasketModule).Assembly;
+
+builder.Services.AddCarterWithAssemblies(catalogAssembly, basketAssembly);
+
+builder.Services.AddMediatR(config =>
+{
+	config.RegisterServicesFromAssemblies(catalogAssembly, basketAssembly);
+	config.AddOpenBehavior(typeof(ValidationBehavior<,>));
+	config.AddOpenBehavior(typeof(LoggingBehavior<,>));
+});
+
+builder.Services.AddValidatorsFromAssemblies([catalogAssembly, basketAssembly]);
 
 builder.Services
 	.AddCatalogModule(builder.Configuration)

@@ -11,7 +11,6 @@ public static class BasketModule
 {
 	public static IServiceCollection AddBasketModule(this IServiceCollection services, IConfiguration configuration)
 	{
-
 		var connectionString = configuration.GetConnectionString("Database");
 
 		services.AddScoped<ISaveChangesInterceptor, AuditableEntityInterceptor>();
