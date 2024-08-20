@@ -16,8 +16,23 @@ public class UpdateItemPriceInBasketCommandValidator : AbstractValidator<UpdateI
 internal class UpdateItemPriceInBasketHandler(BasketDbContext dbContext)
 	: ICommandHandler<UpdateItemPriceInBasketCommand, UpdateItemPriceInBasketResult>
 {
-	public Task<UpdateItemPriceInBasketResult> Handle(UpdateItemPriceInBasketCommand request, CancellationToken cancellationToken)
+	public async Task<UpdateItemPriceInBasketResult> Handle(UpdateItemPriceInBasketCommand command, CancellationToken cancellationToken)
 	{
-		throw new NotImplementedException();
+		var itemsToUpdate = await dbContext.ShoppingCartItems
+			.Where(x => x.ProductId == command.ProductId)
+			.ToListAsync(cancellationToken);
+
+		if (!itemsToUpdate.Any())
+		{
+			return new UpdateItemPriceInBasketResult(false);
+		}
+
+		itemsToUpdate.ForEach(x => {
+			x.UpdatePrice(command.Price);
+		});
+
+		await dbContext.SaveChangesAsync(cancellationToken);
+
+		return new UpdateItemPriceInBasketResult(true);
 	}
 }
