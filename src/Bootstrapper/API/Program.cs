@@ -33,7 +33,7 @@ builder.Services.AddStackExchangeRedisCache(opts =>
 	opts.Configuration = builder.Configuration.GetConnectionString("Redis");
 });
 
-builder.Services.AddMassTransitWithAssemblies(assemblies);
+builder.Services.AddMassTransitWithAssemblies(builder.Configuration, assemblies);
 
 builder.Services
 	.AddCatalogModule(builder.Configuration)
