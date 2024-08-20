@@ -4,7 +4,6 @@ using System.Text.Json;
 using System.Text.Json.Serialization;
 
 namespace Basket.Data.Repository;
-
 public class CachedBasketRepository
 	(IBasketRepository repository, 
 	 IDistributedCache cache)

@@ -1,4 +1,5 @@
-﻿using MediatR;
+﻿using Catalog.Contracts.Products.Features.GetProductById;
+using MediatR;
 
 namespace Basket.Basket.Features.AddItemIntoBasket;
 
@@ -23,14 +24,15 @@ internal class AddItemIntoBasketHandler
 	{
 		var shoppingCart = await repository.GetBasket(command.UserName, false, cancellationToken);
 
-		var result = await sender.Send(new GetProductByIdQuery(command.ShoppingCartItem.ProductId));
+		var result = await sender.Send(
+			new GetProductByIdQuery(command.ShoppingCartItem.ProductId));
 
 		shoppingCart.AddItem(
 				command.ShoppingCartItem.ProductId,
 				command.ShoppingCartItem.Quantity,
 				command.ShoppingCartItem.Color,
-				command.ShoppingCartItem.Price,
-				command.ShoppingCartItem.ProductName);
+				result.Product.Price,
+				result.Product.Name);
 
 		await repository.SaveChangesAsync(command.UserName, cancellationToken);
 
