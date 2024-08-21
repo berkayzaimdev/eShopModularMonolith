@@ -8,7 +8,7 @@ public class CatalogDataSeeder
 	{
 		if(!await dbContext.Products.AnyAsync())
 		{
-			await dbContext.Products.AddRangeAsync();
+			await dbContext.Products.AddRangeAsync(InitialData.Products);
 			await dbContext.SaveChangesAsync();
 		}
 	}

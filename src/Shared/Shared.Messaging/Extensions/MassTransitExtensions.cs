@@ -21,11 +21,6 @@ public static class MassTransitExtensions
 			config.AddSagas(assemblies);
 			config.AddActivities(assemblies);
 
-			config.UsingInMemory((context, configurator) =>
-			{
-				configurator.ConfigureEndpoints(context);
-			});
-
 			config.UsingRabbitMq((context, configurator) =>
 			{
 				configurator.Host(new Uri(configuration["MessageBroker:Host"]!), host =>
