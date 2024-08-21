@@ -67,3 +67,8 @@
    komutları yürütülür.
 - docker-compose projesi ayağa kaldırılır. Artık Keycloak'a ait verileri barındıran tablolar, seçtiğimiz schema'ya eklenmiştir. 
 > (Çok sayıda hata alındı, komutlar pgadmin yerine container cli'de yürütülüp proje baştan başlatılınca tablolar ekleniyordu, lakin garip bir şekilde db duplicate olmuş durumdaydı. PostgreSQL'i silince ve Docker'da tüm container'ları volume'ları ile birlikte temizleyince düzeldi)
+
+---
+
+# Applying Outbox Pattern
+
