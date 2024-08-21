@@ -19,11 +19,13 @@ builder.Services.AddControllers();
 // common services; carter, mediatr, fluent validation
 var catalogAssembly = typeof(CatalogModule).Assembly;
 var basketAssembly = typeof(BasketModule).Assembly;
+var orderingAssembly = typeof(OrderingModule).Assembly;
 
 Assembly[] assemblies =
 {
 	catalogAssembly,
-	basketAssembly
+	basketAssembly,
+	orderingAssembly
 };
 
 builder.Services.AddCarterWithAssemblies(assemblies);
